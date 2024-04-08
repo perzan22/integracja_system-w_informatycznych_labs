@@ -1,6 +1,6 @@
 from curses.ascii import isdigit
 
-
+# pierwszy sposób sprawdzenia czy znak jest liczbą za pomocą isdigit
 def isSignDigit1(input: str) -> str:
 
     isNumber = isdigit(input)
@@ -11,6 +11,7 @@ def isSignDigit1(input: str) -> str:
         
     return response
 
+#drugi sposób sprawdzenia czy znak jest liczbą za pomocą isinstance
 def isSignDigit2(input: str) -> str:
 
     isNumber = isinstance(input, str)

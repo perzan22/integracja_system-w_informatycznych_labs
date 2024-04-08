@@ -1,5 +1,7 @@
 import math as m
 
+#plik zawiera 4 funkcje wykorzystujące moduł math
+
 def pierwiastek(x: int):
     return m.sqrt(x)
 

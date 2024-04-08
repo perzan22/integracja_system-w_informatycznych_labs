@@ -1,7 +1,8 @@
 import random
 import string
 
-
+#funkcja tworząca słownik o kluczach 10-20 i wartościach za pomocą funkcji join, ktora 
+#łączy ze sobą kolejne stringi, a stringiem w tym wypadku będzie randomowy znak z puli liter (ascii_letters) i cyfr (digits)
 def dictionaryRandom():
 
     _24006 = {

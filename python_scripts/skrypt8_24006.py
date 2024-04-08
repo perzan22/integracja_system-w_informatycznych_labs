@@ -3,14 +3,17 @@ import string
 from typing import Counter
 
 
+#funkcja generująca 100 znakowy ciąg randomowych znaków
 def generateSentence():
     return "".join(random.choice(string.ascii_letters + string.digits) for _ in range(100))
 
+#funkcja tworząca słownik, gdzie kluczqami są występujące znaki w ciągu a wartościami są ilości powtózeń tych znaków
 def createDictionary(sent: str):
     
     dictionary = Counter(sent)
     return dict(dictionary)
 
+#funkcja tworząca listę unikaljnych znaków w ciągu
 def createList(sent: str):
 
     dictionary = Counter(sent)

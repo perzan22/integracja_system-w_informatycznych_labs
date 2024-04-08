@@ -1,6 +1,6 @@
 from gettext import find
 
-
+#funkcja sprawdza pierwsze wystąpienie danego ciągu w sentencji
 def findSentence(sent: str, word: str) -> int:
 
     index = sent.find(word)

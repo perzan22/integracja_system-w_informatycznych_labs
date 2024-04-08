@@ -1,13 +1,19 @@
+#klasa Vehicle
 class Vehicle:
+
+    #konstruktor klasy Vehicle
     def __init__(self, nazwa: str, rok_produkcji: int, przebieg: int):
         self.nazwa = nazwa
         self._rok_produkcji = rok_produkcji
         self.przebieg = przebieg
 
+    #wykorzystanie dekoratora który jest getterem, dzięki czemu można dostać się do atrybutu również w miejscu wykorzystania klasy
+    #a nie tylko w samej klasie
     @property
     def rok_produkcji(self):
         return self._rok_produkcji
     
+    #definicje funkcji klasy
     def is_old(self):
         if (self.rok_produkcji < 2010):
             return "Pojazd jest stary"
@@ -20,6 +26,7 @@ class Vehicle:
         else:
             return "Pojazd ma mały przebieg"
         
+#kklasa Car dziedziczy po klasie Vehicle
 class Car(Vehicle):
     
     def __init__(self, nazwa: str, rok_produkcji: int, przebieg: int):
@@ -44,6 +51,7 @@ class Car(Vehicle):
 
 if __name__ == '__main__':
 
+    #utworzenie trzech obiektów utworzonych klas
     pojazd = Vehicle('Volvo', 2012, 130000)
     print(f"Pojazd Został wyprodukowany w {pojazd.rok_produkcji}")
     print(pojazd.is_old())

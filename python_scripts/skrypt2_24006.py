@@ -5,9 +5,12 @@ def isNumber(input: str) -> str:
 
     sent = input
     letters = []
+
+    #petla sprawdza każdy znak po kolei czy jest liczbą
     for letter in sent:
         letters.append(letter.isdigit())
 
+    #jeśli wszystkie są liczbami to isNumber będzie miał wartość True
     isNumber = all(letters)
     if(isNumber):
         return "Podany ciąg znaków jest liczbą."
