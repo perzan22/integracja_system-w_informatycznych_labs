@@ -13,7 +13,6 @@ Korzysta z [windows-curses](https://pypi.org/project/windows-curses/).
 Wynik działania:
 
 ```bash
-# Tutaj możesz wstawić przykładowe wywołanie skryptu i jego wynik
 $ python skrypt1_24006.py
 ```
 
