@@ -78,4 +78,89 @@ Jeśli wszystko poszło poprawnie strona powinna wyglądać tak:
 
 ### Tworzenie modeli w Django
 
+Modele są po prostu obiektem znanym z wielu języków programowania obiektowego, jednak Django zapisuje te obiekty od razu w bazie danych tworząc model. W naszym blogu przyda się model przechowujący informacje o postach na blogu. 
+
+- Stworzenie aplikacji dla naszego projektu
+Przed tworzeniem jakichkolwiek modeli należy stworzyć aplikację wewnątrz projektu. Robi to za nas Django za pomocą komendy:
+```bash
+py manage.py startapp blog
+```
+W projekcie powinien pojawić się teraz nowy folder 'blog' zawierający kolejne pliki. 
+
+Po stworzeniu aplikacji należy w pliku [settings.py](./mysite/settings.py) dodać nasz blog do części INSTALLED_APPS i ta część pwoinna wyglądać następująco: 
+
+![image](https://github.com/perzan22/integracja_system-w_informatycznych_labs/assets/100600167/fa2b3057-8224-48eb-90b9-d6c6861911d0)
+
+- Tworzenie modelu post
+Aby stworzyć model należy w pliku [blog\models](./blog/models.py) taki model zinicjować, nadać mu właściwości i stworzyć jego metody. Model Post może wyglądać w taki sposób:
+
+```bash
+from django.conf import settings
+from django.db import models
+from django.utils import timezone
+
+
+class Post(models.Model):
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    text = models.TextField()
+    created_date = models.DateTimeField(
+            default=timezone.now)
+    published_date = models.DateTimeField(
+            blank=True, null=True)
+
+    def publish(self):
+        self.published_date = timezone.now()
+        self.save()
+
+    def __str__(self):
+        return self.title
+```
+W modelu nadajemy właściwości:
+  - author - jest to klucz obcy będący kluczem autora danego posta
+  - title - tytuł posta
+  - text - treść posta
+  - created_date - data utworzenia posta pobierana z metody timezone.now, która zwraca aktualną datę i godzinę
+  - published_date - data opublikowania posta
+
+Model post zawiera metodę publish(self), która ustawia datę publikacji na aktualną datę po wywołaniu metody oraz zapisuje post w bazie danych. Metoda __str__(self) zwraca tytuł posta.
+
+- Dodanie tablicy dla modeli Post w bazie danych
+Na początek należy zatwierdzić zmiany w modelu za pomocą komendy:
+```bash
+py manage.py makemigrations blog
+```
+
+Django powinien wtedy stworzyć model Post i wpisać go do pliku z migracjami. Teraz należy plik z migracjami zastosować do bazy danych:
+```bash
+py manage.py migrate blog
+```
+
+W ten sposób model Post powinien zostać dodany do bazy danych. 
+
+---
+
+### Administracja Django
+
+Na razie w celu dodawania, czy usuwania postów potrzeba będzie użyć do tego panelu administracyjnego, które Django również nam dostarcza. W pliku [blog/admin.py](./blog/admin.py) należy podmienić kod na:
+```bash
+from django.contrib import admin
+from .models import Post
+
+admin.site.register(Post)
+```
+
+Dzięki temu model Post będzie widoczny w panelu administracyjnym. 
+
+- Utworzenie superusera
+Aby móc zalogować się na panel administracyjny, należy stworzyć konto administracyjne za pomocą komendy
+```bash
+py manage.py createsuperuser
+```
+
+Wyświetli się komunikat o danych do logowania. Należy je wpisać i zatwierdzić.
+
+- Zalogowanie się na konto admina
+
+
 
