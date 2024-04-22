@@ -19,6 +19,7 @@ Kolejne kroki instalacji django:
 python -m venv py3122_env
 ```
 - aktywacja środowiska wirtualnego
+
 Aby aktywować środowisko witualne należy przejść do folderu Scripts naszego środowiska i uruchomić skrypt activate:
 ```bash
 py3122_env\Scripts\activate
@@ -27,6 +28,7 @@ Po aktywowaniu środowiska nasza konsola powinna wyświetlać przed każdą lini
 ![image](https://github.com/perzan22/integracja_system-w_informatycznych_labs/assets/100600167/746f61de-df43-496b-8237-d33a49c97118)
 
 - Instalacja Django
+
 Po aktywacji wirtualnego środowiska można zainstalować Django.
 Na początek należy zaktualizować naszego pip, aby był najnowszą wersją:
 ```bash
@@ -54,12 +56,14 @@ django-admin.exe startproject mysite .
 Wywołany skrypt powinien stworzyć wszystkie potrzebne pliki i foldery do uruchomienia strony takie jak: [manage.py](./manage.py), [settings.py](./mysite/settings.py), czy [urls.py](./mysite/urls.py)
 
 - Konfiguracja pliku settings.py
+
 Plik [settings.py](./mysite/settings.py) zawiera całą konfiguracje naszego projektu. Przed rozpoczęciem tworzenia należy skonfigurować go pod aktualnie tworzony projekt. W naszym projekcie można wykonać pare zmian:
   - Zmiana TIME_ZONE na "Europe/Warsaw"
   - Zmiana języka LANGUAGE_CODE na "pl-pl"
   - Dodanie ścieżki do plików statycznych: należy dodać linijkę STATIC_ROOT = BASE_DIR / 'static' pod linijką STATIC_URL = '/static/'
   - Zmiana hosta na ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com'], ponieważ stronę będziemy wdrażać na witrynie pythonanywhere oraz wyświetlać lokalnie
 - Dodanie bazy danych
+
 Baza danych domyślnie jest ustawiona w pliku [settings.py](./mysite/settings.py) w części DATABESES. Domyślnie Django używa bazy SQLite3. Aby uruchomić bazę danych należy wpisać polecenie
 ```bash
 py manage.py migrate
@@ -81,6 +85,7 @@ Jeśli wszystko poszło poprawnie strona powinna wyglądać tak:
 Modele są po prostu obiektem znanym z wielu języków programowania obiektowego, jednak Django zapisuje te obiekty od razu w bazie danych tworząc model. W naszym blogu przyda się model przechowujący informacje o postach na blogu. 
 
 - Stworzenie aplikacji dla naszego projektu
+
 Przed tworzeniem jakichkolwiek modeli należy stworzyć aplikację wewnątrz projektu. Robi to za nas Django za pomocą komendy:
 ```bash
 py manage.py startapp blog
@@ -92,6 +97,7 @@ Po stworzeniu aplikacji należy w pliku [settings.py](./mysite/settings.py) doda
 ![image](https://github.com/perzan22/integracja_system-w_informatycznych_labs/assets/100600167/fa2b3057-8224-48eb-90b9-d6c6861911d0)
 
 - Tworzenie modelu post
+
 Aby stworzyć model należy w pliku [blog\models](./blog/models.py) taki model zinicjować, nadać mu właściwości i stworzyć jego metody. Model Post może wyglądać w taki sposób:
 
 ```bash
@@ -126,6 +132,7 @@ W modelu nadajemy właściwości:
 Model post zawiera metodę publish(self), która ustawia datę publikacji na aktualną datę po wywołaniu metody oraz zapisuje post w bazie danych. Metoda __str__(self) zwraca tytuł posta.
 
 - Dodanie tablicy dla modeli Post w bazie danych
+
 Na początek należy zatwierdzić zmiany w modelu za pomocą komendy:
 ```bash
 py manage.py makemigrations blog
@@ -153,6 +160,7 @@ admin.site.register(Post)
 Dzięki temu model Post będzie widoczny w panelu administracyjnym. 
 
 - Utworzenie superusera
+
 Aby móc zalogować się na panel administracyjny, należy stworzyć konto administracyjne za pomocą komendy
 ```bash
 py manage.py createsuperuser
@@ -249,6 +257,7 @@ W powyższym kodzie na początek importujemy wszystkie widoki w folderze blog. N
 Widok jest plikiem, w którym przechowujemy logikę naszej aplikacji. Widok pobiera informacje z modelu i przekazuje je do szablonu HTML. Widoki przechowuje się w pliku [blog\views.py](./blog/views.py). 
 
 - Stworzenie widoku
+
 Widok należy stworzyć w pliku przytoczonym wcześniej.
 ```bash
 def post_list(request):
@@ -267,6 +276,7 @@ Szablony są tym co na stronie widać, za pomocą kodu HTML. Szablony umieszcza 
 - Utworzenie katalogu blog wewnątrz templates
 - Utworzenie szablonu post_list.html wewnątrz templates/blog
 - Wypełnienie szablonu kodem HTML
+
 Przykładowy szablon statyczny:
 ```bash
 <html>
@@ -300,6 +310,7 @@ Przykładowy szablon statyczny:
 Dane przekazywane są z modeli do szablonu za pomocą widoków. To właśnie widoki należy edytować tak, aby szablony miały dostęp do modeli w bazach danych. 
 
 - Import modelu do widoku
+
 W pliku blog/views.py należy dodać import:
 ```bash
 from django.shortcuts import render
@@ -307,6 +318,7 @@ from .models import Post
 ```
 
 - Użycie QuerySet do odczytu danych
+
 QuerySet jest niczym innym jak listą obieiktów w bazie danych. Za pomocą specjalnych funkcji możemy odczytywać potrzebne nam obiekty i przekazywać do aplikacji.
 W pliku views można dodać:
 ```bash
@@ -369,6 +381,7 @@ Dzięki temu nasza strona już nabiera stylu:
 ![image](https://github.com/perzan22/integracja_system-w_informatycznych_labs/assets/100600167/3bd4344a-e077-4cbe-b304-3731fa9c672d)
 
 - Tworzenie plików statycznych
+
 Pliki statyczne to pliki, które dla każdego użytkownika będą takie same. Są to na przykłąd arkusze stylów lub foldery z obrazkami. Pliki te należy umieścić w nowym folderze static wewnątrz folderu blog. W folderze static można stworzyć kolejny folder o nazwie np. css i w nim tworzyć pliki css ze stylami. Po stworzeniu pliku blog.css można go wypełnić poniższym kodem:
 ```bash
 .page-header {
@@ -454,7 +467,9 @@ Strona po odpaleniu powinna wyglądać już przyjemnie.
 ### Rozbudowa szablonu Django
 
 Szablony Django umożliwiają rozszerzanie szablonów. Można stworzyć szablon bazowy i w zależności od tego co chcemy na stronie wyświetlić to o konkretny szablon go rozszerzamy. 
+
 - Tworzenie szablonu bazowego
+
 W blog/temkplates/blog należy stworzyc plik base.html i zapełnić go kodem:
 ```bash
 <body>
@@ -474,6 +489,7 @@ W blog/temkplates/blog należy stworzyc plik base.html i zapełnić go kodem:
 Należy zauważyć znaczniki { % block content % } i { % endblock % }, między którymi można umieścić blok o któy rozszerzamy bazowy. 
 
 - Dostosowanie szablonów do pliku bazowego
+
 Nasz szablon post_list.html może teraz wyglądać tak:
 ```bash
 {% extends 'blog/base.html' %}
@@ -499,13 +515,15 @@ I dzięki qwykorzystaniu znaczników  { % block content % } i { % endblock % } b
 
 Aplikację można reozbudować chociażby o wyświetlenie pojedynczego wpisu. 
 - Dodanie linku do pojedynczego posta
+
 Należy zamienić linię w szablonie post_list z tytułem strony:
 ```bash
 <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
 ```
-W ten sposób dodaliśmy link w szablonie. Znacznik tutaj dodany generuje nam URL. 'post_detail' oznacza, że szukamy adresu zaczynającego się od 127.0.0.1:8000, natomiast 'pk=post.pk' dodaje do adresu atrybut pk z wartością unikalnego klucza posta. 
+W ten sposób dodaliśmy link w szablonie. Znacznik tutaj dodany generuje nam URL. 'post_detail' oznacza, że szukamy widoku post_detail, natomiast 'pk=post.pk' dodaje do adresu atrybut pk z wartością unikalnego klucza posta. 
 
 - Dodanie URL
+
 Aby URL mógł zostać zinterpretowany należy dodać go w pliku urls.py. Dodajemy URL:
 ```bash
 from django.urls import path
@@ -520,6 +538,7 @@ urlpatterns = [
 Django tworzy teraz ścieżkę 127.0.0.1:8000/post/<int:pk>/ int:pk jest niczym innym jak kluczem naszego posta. Po próbie dostania się na ten URL łączy się z widokiem post_detail. 
 
 - Tworzenie widoku post_detail
+
 Aby strona nie wyświetlała błędu należy dodać widok w pliku blog/views.py. Do istniejącego kodu dodajemy import:
 ```bash
 from django.shortcuts import render, get_object_or_404
@@ -534,6 +553,7 @@ def post_detail(request, pk):
 Dzięki temu stworzyliśmy widok dla post_detail. W przypadku braku posta o danym id wyświetli się błąd 404 dzięki funkcji get_object_or_404.
 
 - Stworzenie szablonu post_detail
+
 Ostatnim punktem jest stworzenie szablonu Django post detail, aby wyświetlał jeden post. Należy stworzyć nowy plik w katalogu blog/templates/blog o nazwie post_detail.html i wypełnić go kodem:
 ```bash
 {% extends 'blog/base.html' %}
@@ -554,6 +574,121 @@ Jak widać znowu wykorzystujemy znacznik Django do rozszerzenia szablonu bazoweg
 
 ---
 
+### Formularz Django
 
+Ostatnim elementekm brakującym w naszej aplikacji jest dodanie formularzy, dzięki którym będziemy mogli posty dodawać bezpośrednio na stronie. 
 
+- Stworzenie pliku do formularzy
+
+W Django formularze można stworzyć w osobnym pliku np. wewnątrz katalogu blog stworzyć plik forms.py i wypełnić go kodem:
+```bash
+from django import forms
+
+from .models import Post
+
+class PostForm(forms.ModelForm):
+
+    class Meta:
+        model = Post
+        fields = ('title', 'text',)
+```
+
+W powyższym kodzie definiujemy formularz o nazwie PostForm i w class Meta przekazujemy do Django jaki model powinien być w formularzu wykorzystywany oraz jakie pola będą do wypełnienia. W naszym przykłądzie będą to pola title i text. 
+
+- Dodanie odnośnika w szablonie
+
+W pliku bazowym base.html można dodać odnośnik do naszego formularza w divie klay page-header. Dodajemy w divie linijkę:
+```bash
+<a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
+```
+
+Powyżej chcemy się odwołac do widoku post_new. Klasa glyphicon glyphicon-plus jest zdefiniowana w bootstrapie. 
+
+- Dodanie URL
+
+Tradycyjnie należy teraz dodać URL w pliku urls.py
+
+```bash
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.post_list, name='post_list'),
+    path('post/<int:pk>/', views.post_detail, name='post_detail'),
+    path('post/new/', views.post_new, name='post_new'),
+]
+```
+- Dodanie widoku
+
+Teraz dodajemy widok post_new do pliku views.py. Importujemy:
+```bash
+from .forms import PostForm
+```
+oraz dodajemy widok:
+```bash
+def post_new(request):
+    form = PostForm()
+    return render(request, 'blog/post_edit.html', {'form': form})
+```
+
+- Dodanie szablonu post_edit
+
+Formularz należy wyświetlić w szablonie. Stworzymy do tego szablon post_edit.html w katalogu blog/tamplates/blog. 
+```bash
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <h2>New post</h2>
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+{% endblock %}
+```
+
+Tym razem między znacznikami Django dodaliśmy form, który wyświetlany jest za pomocą funkcji as_p. Formularz tworzy nowy post metodą POST. 
+
+- Zapisywanie posta
+
+Na razie posta nie zapisujemy mimo naciśnięcia buttona. Należy zmienić widok, aby otrzymywał polecenie POST i je wykonywał. Zmieniamy widok post_new w views.py na:
+
+```bash
+def post_new(request):
+    if request.method == "POST":
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.published_date = timezone.now()
+            post.save()
+            return redirect('post_detail', pk=post.pk)
+    else:
+        form = PostForm()
+    return render(request, 'blog/post_edit.html', {'form': form})
+```
+
+W powyższym kodzie widok sprawdza, czy przekazana została w atrybucie method wartość "POST". JKeśli tak oznacza to, że chcemy zapisać nowy post. Jeśli post jest poprawnie wypełniony to post jest zapisywany. Autorem postu staje się aktualnie zalogowany użytkownik, data publikacji pobierana jest metodą timezone.now(). Post jest zapisywany i przekierowani jesteśmy na stronę z detalami tego posta. Jeśli nie przekazaliśmy metody POST to pokazuje nam się pusty formularz. Należy dodać import na początku pliku: 
+```bash
+from django.shortcuts import redirect
+```
+
+- Dodanie opcji edycji posta
+  - Dodanie odnośnika w szablonie
+  - Dodanie odpowiedniego URL
+  - DOdanie widoku post_edit
+
+- Dodanie autoryzacji
+
+Znaczniki Django pozwalają na łatwec wprowadzenie autoryzacji użytkownika. Można to zrobić w poniższy sposób:
+```bash
+{% if user.is_authenticated %}
+    <a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
+{% endif %}
+```
+
+W powyższym przykładzie odnośnik do stworzenia nowego posta wyświetli się tylko wtedy, gdy użytkownik jest zalogowany. 
+
+- Wdrożenie aplikacji
+
+Aplikacja jest gotowa, teraz czas ją wdrożyć na serwis PythonAnywhere. Na początek commitujemy zmiany i wypychamy je na GitHub, następnie wdrażamy aplikacje za pomocą komendy git pull w konsoli PythonAnywhere.
 
